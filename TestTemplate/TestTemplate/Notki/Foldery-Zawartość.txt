@@ -1,0 +1,25 @@
+Controllers - użycie funkcji 
+DTOs - obiekty do zwracania / przyjęcia z funkcji
+Migrations - generowany automatycznie
+Models - tabele z db + DbContext
+Services - Servis + Interfejs do serwisu (definicja funkcji + interface)
+
+Kolejność
+MODELE -> DBContext -> Migracja -> DTO + Servises |
+
+w startup
+(configure services)
+				   interface	service
+ 		services.AddScoped<IMedService, MedService>();
+            services.AddScoped<IPrescriptionService, PrescriptionService>();
+            services.AddControllers();
+            services.AddDbContext<MedDbContext>( opt =>
+            { (connectstring)
+                opt.UseSqlServer("Server=localhost/objective_hertz,1433; Database=Master; User Id=SA; Password=<YourStrong@Passw0rd>");
+            });
+
+do migracji
+dotnet ef migrations add "NazwaMigracji"
+(to stworzy folder z migracjami)
+ dotnet ef database update 
+(to pushuje migracje na db)

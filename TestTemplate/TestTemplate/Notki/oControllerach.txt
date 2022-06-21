@@ -1,0 +1,37 @@
+Obsługują one ruch sieci
+W startupie nie trzeba nic dodać ( services.AddControllers(); dodaje) 
+
+//za co odpowiada (jaki adres)
+[Route ("api/warehouse")]
+[ApiController]
+
+public class NAZWAKLASY : ControllerBase (ten interfejs zapewnia różne stockowe rozwiązania , typu Ok() ) 
+
+private readonly (InterfejsZMetodamiDoTego) _dbService;
+
+ public NAZWAKLASY(InterfejsZMetodamiDoTego dbService)
+        {
+            _dbService = dbService;
+        }
+        
+        
+  potem odnoszenie się do metod : _dbService.NazwaMetody();
+  
+  
+  Aby funkcja odpowiadała na coś
+  
+  [HttpPost]
+  
+  public (...) 
+  typ IActionResult sam konwertuje dane na json czy inny syf
+  
+  
+  przykład
+  
+  [HttpPost]
+  
+  public async Task <IActionResult> AddProductToWareHouse (ProductWarehouse product)
+  {         
+  return Ok(await _dbService.AddProductWarehouse(product));
+  }
+  

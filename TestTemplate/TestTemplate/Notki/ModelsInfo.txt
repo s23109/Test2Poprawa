@@ -1,0 +1,16 @@
+Uproszczenie typu obiektu
+
+można dawać wbudowane ,,constraints'' -> wymuszają one poprawność danych (nie trzeba ręcznie sprawdzać)
+
+przykład
+
+public class ProductWarehouse
+    {
+        [Required(ErrorMessage ="Id produktu jest wymagane")]
+        public int IdProduct { get; set; }
+        [Required(ErrorMessage ="Id magazynu jest wymagane")]
+        public int IdWarehouse { get; set; }
+        [Required(ErrorMessage ="Ilość jest wymagana")]
+        [Range(1,int.MaxValue,ErrorMessage ="Ilość musi być większa od 0")]
+        public int Amount { get; set; }
+    }

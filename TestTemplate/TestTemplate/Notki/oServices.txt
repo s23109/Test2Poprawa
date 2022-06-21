@@ -1,0 +1,35 @@
+,,Śmietanka kolosa''
+w serwisie dodajesz pole meddbcontext
+2 typy - Interfejs metod , Sam plik services
+
+Nazwa Interfejsu
+
+I(nazwaServisu)
+
+Nazwa servisu 
+
+np ProcedureDbService
+
+Interfejs zawiera metody - parametry + typy zwrotu
+
+Przykład
+
+public interface IProcedureDbService
+    {
+        Task<int> AddProductWarehouse(ProductWarehouse productWarehouse);
+    }
+    
+
+Klasa z metodami implementuje ten interfejs,
+
+public class ProcedureDbService: IProcedureDbService
+
+aby to działało, 
+
+TRZEBA TO DODAć W STARTUP.cs
+
+ConfigureServices
+   
+                    INTERFEJS           KLASA Z METODAMI
+services.AddScoped<IProcedureDbService, ProcedureDbService>();
+

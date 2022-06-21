@@ -1,0 +1,53 @@
+Każdy model musi mieć powiązanie do innego modelu (jak wiele do wielu w db) , dlatego w klasie wyższej (im wyższa tym ma mniej powiązań do góry)
+daje się :
+public virtual IEnumerable<Klasa_Niższa> Klasa_Niższa { get; set; }
+(odniesienie do tablicy? wielu obiektów)
+
+a w klasie niższej daje się odniesienie do pojedyńczych obiektów wyższych
+np
+public virtual Patient Patient { get; set; }
+
+public virtual Doctor Doctor { get; set; }
+
+(tych powiązań może być wiele)
+
+(zaleca się tworzenie ,,powiązań'' pod koniec modelu (bo czytelniej)
+
+Przykład obiektu wyższego (od strony 1 ) 
+
+public class Doctor
+    {
+
+        public int IdDoctor { get; set; }
+
+        [MaxLength(100)]
+        public string FirstName { get; set; }
+
+        [MaxLength(100)]
+        public string LastName { get; set; }
+
+        [MaxLength(100)]
+        public string Email { get; set; }
+
+        public virtual IEnumerable<Prescription> Prescriptions { get; set; }
+    }
+
+
+Przykład obiektu niższego (od strony wiele)
+
+public class Prescription_Medicament
+    {
+
+        public int IdMedicament { get; set; }
+
+        public int IdPrescription { get; set; }
+
+        public int Dose { get; set; }
+
+        [MaxLength(100)]
+        public string Details { get; set; }
+
+        public virtual Prescription Prescription { get; set; }
+
+        public virtual Medicament Medicament { get; set; }
+    }
