@@ -38,12 +38,15 @@ namespace TestTemplate.Controllers
         public async Task<IActionResult> AddMember( MemberDTO newMember , int OrganisationID, int TeamId)
         {
 
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             if (await _service.ISTeamInOrganisation(OrganisationID, TeamId))
             {
                 try
                 {
                     _service.AddMember(newMember, OrganisationID, TeamId);
-
+                    
                     return NoContent();
 
                 }
