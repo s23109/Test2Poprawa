@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace TestTemplate.Models
 {
@@ -13,7 +14,14 @@ namespace TestTemplate.Models
         public DbSet<Member> Member { get; set; }
         public DbSet<Membership> Membership { get; set; }
 
-
+        List<Organisation> organisationList = new List<Organisation>
+        {
+            new Organisation{
+            OrganisationID = 1,
+            OrganisationName= "Sus",
+            OrganisationDomain = "Mogus"
+            }
+        };
         public MainDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -43,7 +51,7 @@ namespace TestTemplate.Models
                 e.HasKey(e => e.OrganisationID);
                 e.Property(e => e.OrganisationName).HasMaxLength(100).IsRequired();
                 e.Property(e => e.OrganisationDomain).HasMaxLength(50).IsRequired();
-
+                e.HasData(organisationList);
                 e.ToTable("Organisation");
             });
 
@@ -91,7 +99,7 @@ namespace TestTemplate.Models
                 e.HasOne(e => e.Organisation)
                .WithMany(e => e.Member)
                .HasForeignKey(e => e.OrganisationID)
-               .OnDelete(DeleteBehavior.Cascade);
+               .OnDelete(DeleteBehavior.ClientSetNull);
 
                 e.ToTable("Member");
             });
@@ -105,12 +113,12 @@ namespace TestTemplate.Models
                 e.HasOne(e => e.Member)
                .WithMany(e => e.Membership)
                .HasForeignKey(e => e.MemberID)
-               .OnDelete(DeleteBehavior.Cascade);
+               .OnDelete(DeleteBehavior.NoAction);
 
                 e.HasOne(e => e.Team)
                .WithMany(e => e.Membership)
                .HasForeignKey(e => e.TeamID)
-               .OnDelete(DeleteBehavior.Cascade);
+               .OnDelete(DeleteBehavior.NoAction);
 
                 e.ToTable("Membership");
             });

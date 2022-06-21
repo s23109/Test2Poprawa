@@ -6,10 +6,10 @@ namespace TestTemplate.Models
     public class Membership
     {
         [Required]
-        public int MemberID { get; set; }
+        public int? MemberID { get; set; }
 
         [Required]
-        public int TeamID { get; set; }
+        public int? TeamID { get; set; }
 
         public DateTime MembershipDate { get; set; }
 
