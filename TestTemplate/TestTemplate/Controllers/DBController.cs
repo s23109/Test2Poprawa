@@ -17,17 +17,22 @@ namespace TestTemplate.Controllers
             _service = service;
         }
 
-        /*
+        
 
         [HttpGet]
         [Route("{id}")]
 
-        public async Task<IActionResult> GetSth( int id)
+        public async Task<IActionResult> GetTeam( int idTeam)
         {
-            try { return Ok(await _service.Funkcja(id))}
-            catch (Exception e) { return BadRequest(e.Message); }
+
+            if (await _service.DoesTeamExist(idTeam) == false)
+            {
+                return NotFound();
+            }
+
+            return Ok( await _service.GetTeam(idTeam) );   
         }
 
-        */
+        
     }
 }
