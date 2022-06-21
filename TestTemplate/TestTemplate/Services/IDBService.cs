@@ -10,5 +10,9 @@ namespace TestTemplate.Services
 
         Task<TeamDTO> GetTeam(int idTeam);
 
+        Task<bool> ISTeamInOrganisation( int idOrganisation , int idTeam);
+
+        Task AddMember(MemberDTO member , int idOrganisation , int idTeam);
+
     }
 }
