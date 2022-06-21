@@ -6,7 +6,13 @@ namespace TestTemplate.Models
     {
 
         //db sety np:
-        // public DbSet<Model> Model {get;set;};
+        // public DbSet<Model> Model {get;set;}
+        public DbSet<Organisation> Organisation { get; set; }
+        public DbSet<Team> Team { get; set; }
+        public DbSet<File> File { get; set; }
+        public DbSet<Member> Member { get; set; }
+        public DbSet<Membership> Membership { get; set; }
+
 
         public MainDbContext(DbContextOptions options) : base(options)
         {
@@ -30,6 +36,42 @@ namespace TestTemplate.Models
              * 
              * 
              */
+
+
+            modelBuilder.Entity<Organisation>(e =>
+            {
+
+
+                e.ToTable("Organisation");
+            });
+
+            modelBuilder.Entity<Team>(e =>
+            {
+
+
+                e.ToTable("Team");
+            });
+
+            modelBuilder.Entity<File>(e =>
+            {
+
+
+                e.ToTable("File");
+            });
+
+            modelBuilder.Entity<Member>(e =>
+            {
+
+
+                e.ToTable("Member");
+            });
+
+            modelBuilder.Entity<Membership>(e =>
+            {
+
+
+                e.ToTable("Membership");
+            });
         }
     }
 }
