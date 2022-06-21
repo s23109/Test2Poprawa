@@ -40,35 +40,77 @@ namespace TestTemplate.Models
 
             modelBuilder.Entity<Organisation>(e =>
             {
-
+                e.HasKey(e => e.OrganisationID);
+                e.Property(e => e.OrganisationName).HasMaxLength(100).IsRequired();
+                e.Property(e => e.OrganisationDomain).HasMaxLength(50).IsRequired();
 
                 e.ToTable("Organisation");
             });
 
             modelBuilder.Entity<Team>(e =>
             {
+                e.HasKey(e => e.TeamID);
+                e.Property(e => e.OrganisationID).IsRequired();
+                e.Property(e => e.TeamName).HasMaxLength(50).IsRequired();
+                e.Property(e => e.TeamDescription).HasMaxLength(100);
 
+                e.HasOne(e => e.Organisation)
+                .WithMany(e => e.Team)
+                .HasForeignKey(e => e.OrganisationID)
+                .OnDelete(DeleteBehavior.Cascade);
 
                 e.ToTable("Team");
             });
 
             modelBuilder.Entity<File>(e =>
             {
+                e.HasKey(e => e.FileID);
+                e.HasKey(e => e.TeamID);
 
+                e.Property(e => e.FileName).HasMaxLength(100).IsRequired();
+                e.Property(e => e.FileExtention).HasMaxLength(4).IsRequired();
+                e.Property(e => e.FileSize).IsRequired();
+
+                e.HasOne(e => e.Team)
+               .WithMany(e => e.File)
+               .HasForeignKey(e => e.TeamID)
+               .OnDelete(DeleteBehavior.Cascade);
 
                 e.ToTable("File");
             });
 
             modelBuilder.Entity<Member>(e =>
             {
+                e.HasKey(e => e.MemberID);
 
+                e.Property(e => e.OrganisationID).IsRequired();
+                e.Property(e => e.MemberName).HasMaxLength(20).IsRequired();
+                e.Property(e => e.MemberSurname).HasMaxLength(50).IsRequired();
+                e.Property(e => e.MemberNickName).HasMaxLength(20);
+
+                e.HasOne(e => e.Organisation)
+               .WithMany(e => e.Member)
+               .HasForeignKey(e => e.OrganisationID)
+               .OnDelete(DeleteBehavior.Cascade);
 
                 e.ToTable("Member");
             });
 
             modelBuilder.Entity<Membership>(e =>
             {
+                e.HasKey(e => e.MemberID);
+                e.HasKey(e => e.TeamID);
+                e.Property(e => e.MembershipDate).IsRequired();
 
+                e.HasOne(e => e.Member)
+               .WithMany(e => e.Membership)
+               .HasForeignKey(e => e.MemberID)
+               .OnDelete(DeleteBehavior.Cascade);
+
+                e.HasOne(e => e.Team)
+               .WithMany(e => e.Membership)
+               .HasForeignKey(e => e.TeamID)
+               .OnDelete(DeleteBehavior.Cascade);
 
                 e.ToTable("Membership");
             });
